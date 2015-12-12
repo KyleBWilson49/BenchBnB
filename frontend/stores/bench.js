@@ -7,21 +7,19 @@ var BenchStore = new Store(AppDispatcher);
 
 BenchStore.all = function () {
   return _benches.slice();
-}
+};
 
-BenchStore._onDispatch = function (payload) {
+BenchStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case BenchConstants.BENCHES_RECEIVED:
       var result = resetBenches(payload.benches);
-      BenchStore.emitChange();
+      BenchStore.__emitChange();
       break;
   }
-}
+};
 
 var resetBenches = function (benches) {
   _benches = benches;
-}
-
-window.BenchStore = BenchStore;
+};
 
 module.exports = BenchStore;

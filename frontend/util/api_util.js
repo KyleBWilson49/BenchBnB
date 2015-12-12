@@ -1,16 +1,15 @@
-var ApiActions = require('../actions/api_actions')
+var ApiActions = require('../actions/api_actions');
 
 ApiUtil = {
-  fetchBenches: function () {
+  fetchBenches: function (bounds) {
     $.ajax({
       url: "api/benches",
+      data: bounds,
       success: function (benches) {
-        ApiActions.receiveAll(benches)
+        ApiActions.receiveAll(benches);
       }
-    })
+    });
   }
-}
-
-window.ApiUtil = ApiUtil;
+};
 
 module.exports = ApiUtil;

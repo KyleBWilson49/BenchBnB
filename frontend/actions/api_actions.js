@@ -8,6 +8,6 @@ ApiActions = {
       benches: benches
     });
   }
-}
+};
 
 module.exports = ApiActions;
