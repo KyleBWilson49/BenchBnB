@@ -22,13 +22,13 @@ var Index = React.createClass({
   },
 
   mouseOverListItem: function (e) {
-    debugger
+    // debugger;
   },
 
   render: function () {
     var benches = this.state.benches.map(function (bench, idx) {
       return (
-        <li key={idx} >{bench.description}</li>
+        <li key={idx}>{bench.description}</li>
       );
     });
     return (

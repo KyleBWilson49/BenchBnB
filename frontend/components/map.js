@@ -6,7 +6,7 @@ var React = require('react'),
 
 var Map = React.createClass({
   getInitialState: function () {
-    return { markers: {} }
+    return { markers: {} };
   },
 
   componentDidMount: function () {
