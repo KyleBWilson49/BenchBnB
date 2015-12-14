@@ -1,8 +1,23 @@
 var React = require('react'),
     Map = require('./map'),
-    Index = require('./index');
+    FilterStore = require('../stores/filterStore'),
+    ApiUtil = require('../util/api_util'),
+    Index = require('./index'),
+    Seats = require('./seats');
 
 var Search = React.createClass({
+  getInitialState: function () {
+    return FilterStore.all();
+  },
+
+  componentDidMount: function () {
+    this.filterListener = FilterStore.addListener(this._updateFilters);
+  },
+
+  componentWillUnmount: function () {
+    this.filterListener.remove();
+  },
+
   clickMapHandler: function (lat, lng) {
     var state = null;
     var url = "/benches/new";
@@ -10,10 +25,16 @@ var Search = React.createClass({
     this.props.history.pushState(state, url, query);
   },
 
+  _updateFilters: function () {
+    this.setState(FilterStore.all());
+    ApiUtil.fetchBenches(this.state);
+  },
+
   render: function () {
     return (
       <div>
-        <Map click={this.clickMapHandler}/>
+        <Seats />
+        <Map click={this.clickMapHandler} filters={this.state}/>
         <Index />
       </div>
     );

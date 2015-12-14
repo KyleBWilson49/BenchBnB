@@ -1,6 +1,8 @@
 var React = require('react'),
     ReactDOM = require('react-dom'),
     BenchStore = require('../stores/bench'),
+    FilterStore = require('../stores/filterStore'),
+    FilterActions = require('../actions/filter_actions'),
     ApiUtil = require('../util/api_util');
 
 
@@ -18,7 +20,7 @@ var Map = React.createClass({
     this.map = new google.maps.Map(map, mapOptions);
 
     this.benchListener = BenchStore.addListener(this._placeMarkers);
-    this.mapListener = google.maps.event.addListener(this.map, 'idle', this._fetchBenches);
+    this.mapListener = google.maps.event.addListener(this.map, 'idle', this._updateFilters);
     this.clickListener = google.maps.event.addListener(this.map, 'click', this.handleClick);
   },
 
@@ -27,12 +29,12 @@ var Map = React.createClass({
     this.mapListener.remove();
   },
 
-  _fetchBenches: function () {
+  _updateFilters: function () {
     var bounds = this.map.getBounds();
     var NECorner = bounds.getNorthEast();
     var SWCorner = bounds.getSouthWest();
 
-    ApiUtil.fetchBenches({
+    FilterActions.receiveFilters({
       bounds: {
         NECorner: { lat: NECorner.lat(), lng: NECorner.lng()},
         SWCorner: { lat: SWCorner.lat(), lng: SWCorner.lng()}
