@@ -1,9 +1,9 @@
 var React = require('react'),
-    LinkedStateMixin = require('react-addons-linked-state-mixin'),
-    History = require('react-router').History;
+    ApiUtil = require('../util/api_util'),
+    LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 module.exports = React.createClass({
-  mixins: [LinkedStateMixin, History],
+  mixins: [LinkedStateMixin],
 
   blankAttrs: {
     description: '',
@@ -16,13 +16,23 @@ module.exports = React.createClass({
     return this.blankAttrs;
   },
 
+  componentDidMount: function () {
+    var lat = this.props.location.query.lat;
+    var lng = this.props.location.query.lng;
+    this.setState({ lat: lat, lng: lng });
+  },
+
   createBench: function (event) {
     event.preventDefault();
     var bench = {};
     Object.keys(this.state).forEach(function (key) {
       bench[key] = this.state[key];
     }.bind(this));
-// ApiUtil
+
+    ApiUtil.createBench(bench, function () {
+      this.props.history.push('/');
+    }.bind(this));
+
     this.setState(this.blankAttrs);
   },
 

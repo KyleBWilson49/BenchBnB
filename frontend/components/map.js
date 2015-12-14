@@ -19,6 +19,7 @@ var Map = React.createClass({
 
     this.benchListener = BenchStore.addListener(this._placeMarkers);
     this.mapListener = google.maps.event.addListener(this.map, 'idle', this._fetchBenches);
+    this.clickListener = google.maps.event.addListener(this.map, 'click', this.handleClick);
   },
 
   componentWillUnmount: function () {
@@ -75,6 +76,10 @@ var Map = React.createClass({
         }
       });
     }
+  },
+
+  handleClick: function (e) {
+    this.props.click(e.latLng.lat(), e.latLng.lng());
   },
 
   render: function () {
