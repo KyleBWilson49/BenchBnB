@@ -1,7 +1,7 @@
 class Bench < ActiveRecord::Base
   validates :description, :lat, :lng, :seating, presence: true
 
-  def self.in_bounds(bounds)
+  def self.in_bounds(bounds, min, max)
     benches = self.all
     lat_north = bounds['NECorner']['lat'].to_f
     lat_south = bounds['SWCorner']['lat'].to_f
@@ -13,7 +13,9 @@ class Bench < ActiveRecord::Base
     benches.each do |bench|
       if bench.lat.between?(lat_south, lat_north)
         if bench.lng.between?(lng_west, lng_east)
-          benches_within_bounds << bench
+          if bench.seating.between?(min.to_i, max.to_i)
+            benches_within_bounds << bench
+          end
         end
       end
     end

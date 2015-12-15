@@ -1,4 +1,5 @@
 var React = require('react'),
+    FilterActions = require('../actions/filter_actions'),
     LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var Seats = React.createClass({
@@ -8,8 +9,15 @@ var Seats = React.createClass({
     return { min: 0, max: 1000 };
   },
 
-  updateFilters: function () {
-    
+  updateFilters: function (event) {
+    event.preventDefault();
+
+    var range = {
+      min: this.state.min,
+      max: this.state.max
+    };
+
+    FilterActions.receiveFilters(range);
   },
 
   render: function () {

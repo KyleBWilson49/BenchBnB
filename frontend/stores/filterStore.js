@@ -2,7 +2,7 @@ var Store = require('flux/utils').Store,
     AppDispatcher = require('../dispatcher/dispatcher'),
     BenchConstants = require('../constants/bench_constants');
 
-var _filters = {};
+var _filters = {bounds: "", min: 0, max: 1000};
 var FilterStore = new Store(AppDispatcher);
 
 FilterStore.all = function () {

@@ -27,8 +27,9 @@ var Index = React.createClass({
 
   render: function () {
     var benches = this.state.benches.map(function (bench, idx) {
+      var url = "/#/bench/" + bench.id;
       return (
-        <li key={idx}>{bench.description}</li>
+        <li key={idx}><a href={url}>{bench.description}</a></li>
       );
     });
     return (

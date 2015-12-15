@@ -1,8 +1,7 @@
 class Api::BenchesController < ApplicationController
   def index
-    # @benches = Bench.all
     # debugger
-    @benches = Bench.in_bounds(params[:bounds])
+    @benches = Bench.in_bounds(params[:bounds], params[:min], params[:max])
   end
 
   def create
@@ -13,6 +12,10 @@ class Api::BenchesController < ApplicationController
     else
       reder json: @bench.errors.full_messages
     end
+  end
+
+  def show
+      @bench = Bench.find(params[:id])
   end
 
   private

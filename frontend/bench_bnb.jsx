@@ -9,11 +9,13 @@ var Search = require('./components/search'),
     BenchStore = require('./stores/bench'),
     ApiUtil = require('./util/api_util'),
     App = require('./components/app'),
+    Show = require('./components/show'),
     BenchForm = require('./components/benchForm');
 
 var routes = (
   <Route path="/" component={App}>
     <IndexRoute component={Search}/>
+    <Route path="bench/:benchId" component={Show}/>
     <Route path="benches/new" component={BenchForm}/>
   </Route>
 );

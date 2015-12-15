@@ -9,6 +9,17 @@ BenchStore.all = function () {
   return _benches.slice();
 };
 
+BenchStore.find = function (id) {
+  result = {};
+  _benches.forEach(function (bench) {
+    if (bench.id === id) {
+      result = bench;
+    }
+  });
+
+  return result;
+};
+
 BenchStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case BenchConstants.BENCHES_RECEIVED:

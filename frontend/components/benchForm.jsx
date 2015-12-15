@@ -24,7 +24,9 @@ module.exports = React.createClass({
 
   createBench: function (event) {
     event.preventDefault();
+
     var bench = {};
+
     Object.keys(this.state).forEach(function (key) {
       bench[key] = this.state[key];
     }.bind(this));
