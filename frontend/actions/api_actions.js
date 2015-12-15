@@ -14,6 +14,13 @@ ApiActions = {
       actionType: BenchConstants.BENCH_CREATED,
       bench: bench
     });
+  },
+
+  selectMarker: function (marker) {
+    AppDispatcher.dispatch({
+      actionType: BenchConstants.NEW_SELECTED_MARKER,
+      marker: marker
+    });
   }
 };
 

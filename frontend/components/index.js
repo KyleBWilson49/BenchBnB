@@ -1,6 +1,7 @@
 var React = require('react'),
     BenchStore = require('../stores/bench'),
-    ApiUtil = require('../util/api_util');
+    ApiUtil = require('../util/api_util'),
+    ApiActions = require('../actions/api_actions');
 
 var Index = React.createClass({
   getInitialState: function () {
@@ -22,7 +23,14 @@ var Index = React.createClass({
   },
 
   mouseOverListItem: function (e) {
-    // debugger;
+    var selected;
+    this.state.benches.forEach(function (bench) {
+      if (bench.description === e.target.innerHTML) {
+        selected = bench;
+      }
+    });
+
+    ApiActions.selectMarker(selected);
   },
 
   render: function () {

@@ -3,7 +3,8 @@ var React = require('react'),
     BenchStore = require('../stores/bench'),
     FilterStore = require('../stores/filterStore'),
     FilterActions = require('../actions/filter_actions'),
-    ApiUtil = require('../util/api_util');
+    ApiUtil = require('../util/api_util'),
+    MarkerStore = require('../stores/marker');
 
 
 var Map = React.createClass({
@@ -22,6 +23,7 @@ var Map = React.createClass({
     this.benchListener = BenchStore.addListener(this._placeMarkers);
     this.mapListener = google.maps.event.addListener(this.map, 'idle', this._updateFilters);
     this.clickListener = google.maps.event.addListener(this.map, 'click', this.handleClick);
+    this.selectedListener = MarkerStore.addListener(this._placeMarkers);
   },
 
   componentWillUnmount: function () {
@@ -45,16 +47,27 @@ var Map = React.createClass({
   _placeMarkers: function () {
     var benches = BenchStore.all();
     var markers = [];
+    var selected = MarkerStore.selected();
+    var marker;
 
     this._removeOldBenches(benches);
 
     benches.forEach(function (bench) {
       var latLng = { lat: bench.lat, lng: bench.lng };
 
-      var marker = new google.maps.Marker({
-        position: latLng,
-        title: bench.description
-      });
+
+      if (bench.description === selected.description) {
+        marker = new google.maps.Marker({
+          position: latLng,
+          title: bench.description,
+          animation: google.maps.Animation.BOUNCE
+        });
+      } else {
+          marker = new google.maps.Marker({
+            position: latLng,
+            title: bench.description
+          });
+      }
 
       marker.setMap(this.map);
 
